@@ -11,6 +11,12 @@ app.get('/', (req, res) => {
     res.send('Hello, World!........');
 })
 
+app.get('/info',(req,res)=>{
+    res.send({
+        title: 'Info',
+    })
+})
+
 app.get('/tasks', (req, res) => {
     res.send(tasks);
 });
