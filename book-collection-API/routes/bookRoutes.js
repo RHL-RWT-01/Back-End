@@ -1,6 +1,6 @@
 const express = require('express');
-const router=express.router();
-const vaidate=require('../middlewares/vaidate');
+const router=express.Router();
+const vaidate=require('../middlewares/validate');
 const bookSchema = require('../schemas/bookSchema');
 
 let books=[];
