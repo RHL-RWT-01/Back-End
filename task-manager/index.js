@@ -1,9 +1,9 @@
 const express = require('express');
-
+const z = require('zod');
 const app=express();
-
-const port=3001;
+const port=3002;
 app.use(express.json());
+
 
 let tasks = [];
 
@@ -33,12 +33,13 @@ app.put('/tasks/:id', (req, res) => {
     const {title, description} = req.body;
     const taskIndex = tasks.findIndex(task => task.id === parseInt(id));
 
-    if(task){
-        tasks[taskIndex] = {...tasks[taskIndex], title, description};
+    if (taskIndex !== -1) {
+        tasks[taskIndex] = { ...tasks[taskIndex], title, description };
         res.json(tasks[taskIndex]);
-    }else{
+    } else {
         res.status(404).send('Task not found');
     }
+    
 });
 
 app.delete('/tasks/:id', (req, res) => {
