@@ -1,66 +1,46 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const jwtPassword = "123456";
+const jwtPassword = "123456"; // Ideally from process.env.JWT_SECRET
 
 const app = express();
 app.use(express.json());
 
 const ALL_USERS = [
-  {
-    username: "rahul@gmail.com",
-    password: "123",
-    name: "rahul rawat",
-  },
-  {
-    username: "raman@gmail.com",
-    password: "123321",
-    name: "Raman singh",
-  },
-  {
-    username: "abcd@gmail.com",
-    password: "123321",
-    name: "abcd kumar",
-  },
+  { username: "rahul@gmail.com", password: "123", name: "Rahul Rawat" },
+  { username: "raman@gmail.com", password: "123321", name: "Raman Singh" },
+  { username: "abcd@gmail.com", password: "123321", name: "Abcd Kumar" },
 ];
 
 function userExists(username, password) {
-  // write logic to return true or false if this user exists
-  // in ALL_USERS array
-  return ALL_USERS.some((user) => user.username === username && user.password === password);
+  return ALL_USERS.some(user => user.username === username && user.password === password);
 }
 
 app.get('/', (req, res) => {
-    res.send('Hello, this is basic authentication app')
-})
+  res.send('Hello, this is a basic authentication app');
+});
 
-app.post("/signin", function (req, res) {
-  const username = req.body.username;
-  const password = req.body.password;
+app.post("/signin", (req, res) => {
+  const { username, password } = req.body;
 
   if (!userExists(username, password)) {
-    return res.status(403).json({
-      msg: "User doesnt exist in our in memory db",
-    });
+    return res.status(401).json({ msg: "User doesn't exist in our in-memory db" });
   }
 
-  var token = jwt.sign({ username: username }, "shhhhh");
-  return res.json({
-    token,
-  });
+  const token = jwt.sign({ username }, jwtPassword); // Use jwtPassword for signing
+  return res.json({ token });
 });
 
-app.get("/users", function (req, res) {
-  const token = req.headers.authorization;
+app.get("/users", (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1];
   try {
-    const decoded = jwt.verify(token, jwtPassword);
+    const decoded = jwt.verify(token, jwtPassword); // Verify with jwtPassword
     const username = decoded.username;
-    // return a list of users other than this username
-    return res.json(ALL_USERS.filter((user) => user.username !== username));
+    return res.json(ALL_USERS.filter(user => user.username !== username));
   } catch (err) {
-    return res.status(403).json({
-      msg: "Invalid token",
-    });
+    return res.status(403).json({ msg: "Invalid token" });
   }
 });
 
-app.listen(3000)
+app.listen(3000, () => {
+  console.log('Server running on http://localhost:3000');
+});
