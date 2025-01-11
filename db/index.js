@@ -32,6 +32,25 @@ app.post('/addUser', async (req, res) => {
   }
 });
 
+app.post('/signin',async (req,res)=>{
+    const {username,password}= req.body;
+    const user = await User.findOne({ username: username });
+    if(!user){
+        return res.status(400).json({error:"User not found"});
+    }
+    // compare the entered password with the stored password
+    if(user.password === password){
+        res.status(200).json({message:"Signin successful"});
+    }else{
+        return res.status(400).json({error:"Invalid password"});
+    }
+})
+
+app.get('/users', async (req, res) => {
+    const users = await User.find();
+    res.status(200).json(users);
+})
+
 // Starting the server
 app.listen(3000, () => {
   console.log('Server running on http://localhost:3000');
