@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const app = express();
 app.use(express.json());
 
-mongoose.connect('mongodb+srv://rahulrawat4060:iXtsaFY4TGGItIBB@cluster0.88f7x.mongodb.net/rahulrawat', {
+// Connecting to MongoDB
+mongoose.connect('connection-string', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
@@ -13,14 +14,14 @@ mongoose.connect('mongodb+srv://rahulrawat4060:iXtsaFY4TGGItIBB@cluster0.88f7x.m
   console.error('Failed to connect to MongoDB', err);
 });
 
-const userSchema = new mongoose.Schema({
+// Create User model directly
+const User = mongoose.model('User', {
   name: { type: String, required: true },
   password: { type: String, required: true },
   username: { type: String, unique: true, required: true }
 });
 
-const User = mongoose.model('User', userSchema);
-
+// POST route to add a user
 app.post('/addUser', async (req, res) => {
   try {
     const newUser = new User(req.body);
@@ -31,6 +32,7 @@ app.post('/addUser', async (req, res) => {
   }
 });
 
+// Starting the server
 app.listen(3000, () => {
   console.log('Server running on http://localhost:3000');
 });
