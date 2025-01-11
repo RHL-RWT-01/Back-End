@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const jwtPassword = "123456";
 
 const app = express();
+app.use(express.json());
 
 const ALL_USERS = [
   {
@@ -27,6 +28,10 @@ function userExists(username, password) {
   // in ALL_USERS array
   return ALL_USERS.some((user) => user.username === username && user.password === password);
 }
+
+app.get('/', (req, res) => {
+    res.send('Hello, this is basic authentication app')
+})
 
 app.post("/signin", function (req, res) {
   const username = req.body.username;
