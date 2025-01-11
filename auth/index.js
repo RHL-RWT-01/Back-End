@@ -8,7 +8,7 @@ app.use(express.json());
 const ALL_USERS = [
   { username: "rahul@gmail.com", password: "123", name: "Rahul Rawat" },
   { username: "raman@gmail.com", password: "123321", name: "Raman Singh" },
-  { username: "abcd@gmail.com", password: "123321", name: "Abcd Kumar" },
+  { username: "abcd@gmail.com", password: "123321", name: "Abcd Kumar" }
 ];
 
 function userExists(username, password) {
@@ -31,7 +31,7 @@ app.post("/signin", (req, res) => {
 });
 
 app.get("/users", (req, res) => {
-  const token = req.headers.authorization?.split(' ')[1];
+  const token = req.headers.authorization;
   try {
     const decoded = jwt.verify(token, jwtPassword); // Verify with jwtPassword
     const username = decoded.username;
