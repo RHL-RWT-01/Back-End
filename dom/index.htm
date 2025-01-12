@@ -1,34 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script>
-        function calculateSum() {
-            const input1 = document.getElementById("input1").value;
-            const input2 = document.getElementById("input2").value;
+      function calculateSum() {
+        const input1 = document.getElementById("input1").value;
+        const input2 = document.getElementById("input2").value;
 
-            let sum = parseInt(input1) + parseInt(input2);
+        // let sum = parseInt(input1) + parseInt(input2);
 
-            document.getElementById("output").innerText = `The sum of ${input1} and ${input2} is ${sum}`;
-        }
+        fetch(`localhost:3000/sum?a=${input}&b=${input2}`)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById(
+            "sum"
+          ).innerText = `The sum of ${input1} and ${input2} is ${data.sum}`;
+        })
+
+        // document.getElementById(
+        //   "sum"
+        // ).innerText = `The sum of ${input1} and ${input2} is ${sum}`;
+      }
+
+      function calculateInterest(){
+        const amount = document.getElementById("amount").value;
+        const rate = document.getElementById("rate").value;
+        const time = document.getElementById("time").value;
+
+        fetch(`localhost:3000/interest?amount=${amount}&rate=${rate}&time=${time}`)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById(
+            "interest"
+          ).innerText = `The interest on ${amount} at ${rate}% for ${time} years is ${data.interest}`;
+        })
+       
+        // let interest = (parseInt(amount) * parseInt(rate) * parseInt(time)) / 100;
+        
+        // document.getElementById(
+        //   "interest"
+        // ).innerText = `The interest on ${amount} at ${rate}% for ${time} years is ${interest}`;
+
+      }
+
+
     </script>
-</head>
-<body style="background-color: rgb(180, 168, 168) ;">
-    <h1>Sum Calculator</h1>
+  </head>
+  <body>
     <div>
-        <input type="text" id="input1" placeholder="Enter first number">
-    </div>
-    <br/>
-    <div>
-        <input type="text" id="input2" placeholder="Enter second number">
-    </div>
-    <br/>
-    <button onclick="calculateSum()" style="background-color: aquamarine;" >Calculate Sum</button>
+      <div style="background-color: rgb(160, 200, 149);">
+        <h1>Sum Calculator</h1>
+        <div>
+          <input type="text" id="input1" placeholder="Enter first number" />
+        </div>
+        <br />
+        <div>
+          <input type="text" id="input2" placeholder="Enter second number" />
+        </div>
+        <br />
+        <button
+          onclick="calculateSum()"
+          style="background-color: rgb(27, 59, 220)"
+        >
+          Calculate Sum
+        </button>
 
-    <div>
-        <h3>Output</h3>
-        <p id="output"></p>
-</body>
+        <div>
+          <h3>Output</h3>
+          <p id="sum"></p>
+        </div>
+      </div>
+      <div style="background-color: rgb(206, 166, 224);">
+        <h1>Interest calculator</h1>
+
+        <div>
+          <input type="text" id="amount" placeholder="Enter principal amount" />
+        </div>
+        <br />
+        <div>
+          <input type="text" id="rate" placeholder="Enter rate of interest" />
+        </div>
+        <br />
+        <div>
+          <input type="text" id="time" placeholder="Enter time in years" />
+        </div>
+        <br />
+        <button
+          onclick="calculateInterest()"
+          style="background-color: rgb(27, 59, 220)"
+        >
+          Calculate Interest
+        </button>
+        <div>
+          <h3>Output</h3>
+          <p id="interest"></p>
+  
+      </div>
+    </div>
+  </body>
 </html>
