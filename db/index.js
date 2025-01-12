@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 
 // Connecting to MongoDB
-mongoose.connect('connection string', {
+mongoose.connect('connection', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
