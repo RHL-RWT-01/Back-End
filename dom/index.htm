@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function calculateSum() {
+            const input1 = document.getElementById("input1").value;
+            const input2 = document.getElementById("input2").value;
+
+            let sum = parseInt(input1) + parseInt(input2);
+
+            document.getElementById("output").innerText = `The sum of ${input1} and ${input2} is ${sum}`;
+        }
+    </script>
+</head>
+<body style="background-color: rgb(180, 168, 168) ;">
+    <h1>Sum Calculator</h1>
+    <div>
+        <input type="text" id="input1" placeholder="Enter first number">
+    </div>
+    <br/>
+    <div>
+        <input type="text" id="input2" placeholder="Enter second number">
+    </div>
+    <br/>
+    <button onclick="calculateSum()" style="background-color: aquamarine;" >Calculate Sum</button>
+
+    <div>
+        <h3>Output</h3>
+        <p id="output"></p>
+</body>
+</html>
