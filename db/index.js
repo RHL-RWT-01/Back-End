@@ -1,11 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
+const secretKey="473551";
 const app = express();
 app.use(express.json());
 
 // Connecting to MongoDB
-mongoose.connect('connection-string', {
+mongoose.connect('connection string', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
@@ -22,7 +24,7 @@ const User = mongoose.model('User', {
 });
 
 // POST route to add a user
-app.post('/addUser', async (req, res) => {
+app.post('/signup', async (req, res) => {
   try {
     const newUser = new User(req.body);
     await newUser.save();
@@ -32,23 +34,35 @@ app.post('/addUser', async (req, res) => {
   }
 });
 
+
+
 app.post('/signin',async (req,res)=>{
     const {username,password}= req.body;
-    const user = await User.findOne({ username: username });
+    const user = await User.findOne({ username: username,password: password });
     if(!user){
         return res.status(400).json({error:"User not found"});
     }
     // compare the entered password with the stored password
+    const token=jwt.sign({username},secretKey)
     if(user.password === password){
-        res.status(200).json({message:"Signin successful"});
+        res.status(200).json({message:"Signin successful",
+          token:token
+         });
     }else{
         return res.status(400).json({error:"Invalid password"});
     }
 })
 
 app.get('/users', async (req, res) => {
-    const users = await User.find();
-    res.status(200).json(users);
+  const token=req.headers.authorization;
+  try{
+    const decoded=jwt.verify(token,secretKey);
+    const username=decoded.username;
+    const user = await User.findOne({ username: username});
+          res.status(200).json(user);
+  }catch(err) {
+    res.json({error:err.message});
+  }
 })
 
 // Starting the server
