@@ -16,7 +16,6 @@
                alert("Please enter both title and description.");
                return;
            }
-
            const todo = {
                title,
                description
@@ -27,8 +26,7 @@
 
        function renderTodos() {
            const todoList = document.getElementById('todos');
-           todoList.innerHTML = "";  // Clear the existing list before rendering
-
+           todoList.innerHTML = "";  
            todos.forEach(todo => {
                const task = document.createElement('li');
                task.innerHTML = `
