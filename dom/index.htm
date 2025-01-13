@@ -5,28 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script>
-     function calculateSum() {
+    async function calculateSum() {
   const input1 = document.getElementById("input1").value;
   const input2 = document.getElementById("input2").value;
-
-   fetch(`http://localhost:3000/sum?a=${input1}&b=${input2}`)
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById("sum").innerText = `The sum of ${input1} and ${input2} is ${data.sum}`;
-    });
+  
+  try {
+    const response = await fetch(`http://localhost:3000/sum?a=${input1}&b=${input2}`);
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch sum from server');
+    }
+    
+    const data = await response.json();
+    document.getElementById("sum").innerText = `The sum of ${input1} and ${input2} is ${data.sum}`;
+  } catch (e) {
+    document.getElementById("sum").innerText = "Server is Down";
+  }
 }
 
-function calculateInterest() {
+
+async function calculateInterest() {
   const principal = document.getElementById("amount").value;
   const rate = document.getElementById("rate").value;
   const time = document.getElementById("time").value;
-
-  fetch(`http://localhost:3000/interest?principal=${principal}&rate=${rate}&time=${time}`)
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById("interest").innerText = `The interest on ${principal} at ${rate}% for ${time} years is ${data.interest}`;
-    });
+  try {
+    const response = await fetch(`http://localhost:3000/interest?principal=${principal}&rate=${rate}&time=${time}`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    document.getElementById("interest").innerText = `The interest on ${principal} at ${rate}% for ${time} years is ${data.interest}`;
+  } catch (e) {
+    document.getElementById("interest").innerText = "Server is Down";
+  }
 }
+
 
     </script>
   </head>
