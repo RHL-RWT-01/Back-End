@@ -1,6 +1,6 @@
 const express = require('express');
 const userMiddleware = require('../middlewares/user');
-const {User}= require('../db/index');
+const {User,Course}= require('../db/index');
 const router =express.Router();
 
 router.post('/signup',(req,res)=>{
@@ -28,6 +28,31 @@ router.get('/courses',async (req,res)=>{
     courses = await Course.find({});
     res.json({
         courses: courses
+    })
+})
+
+router.post('/courses:courseId',userMiddleware,(req,res)=>{
+    const courseId=req.params.courseId;
+    const username = req.headers.username;
+User.updateOne({
+    username: username
+}
+,{
+ purchasedCourses:{
+    "$push":courseId
+ }
+})
+})
+
+
+router.get('/purchasedCourses',userMiddleware,async(req,res)=>{
+    const username = req.headers.username;
+    const purchasedCourses = await User.findOne({
+        username: username
+    })
+    .populate('purchasedCourses')
+    res.json({
+        purchasedCourses: purchasedCourses
     })
 })
 
