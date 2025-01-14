@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-mongoose.connect('db-url')
+mongoose.connect('url-db')
 
 const AdminSchema = new mongoose.Schema({
     username:String,

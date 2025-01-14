@@ -23,4 +23,12 @@ router.post('/signup',(req,res)=>{
         })
     })
 })
+
+app.get('/courses',userMiddleware,async (req,res)=>{
+    courses = await Course.find({});
+    res.json({
+        courses: courses
+    })
+})
+
 module.exports = router;

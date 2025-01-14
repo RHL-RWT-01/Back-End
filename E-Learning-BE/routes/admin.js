@@ -24,13 +24,13 @@ router.post('/signup',(req,res)=>{
     })
 })
 
-router.post('/courses',adminMiddleware, async (req, res)=>{
+router.post('/courses',adminMiddleware,  (req, res)=>{
     const title = req.body.title;
     const description = req.body.description;
     const imageLink = req.body.imageLink;
     const price = req.body.price;
 
-    const course = await new Course.create({
+    const course =  Course.create({
         title: title,
         description: description,
         imageLink: imageLink,
