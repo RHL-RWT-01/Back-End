@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-mongoose.connect('mongoDB-url')
+mongoose.connect('string')
 
 const AdminSchema = new mongoose.Schema({
     username:String,
@@ -21,8 +21,19 @@ const CourseSchema = new mongoose.Schema({
     price:Number
 })
 
+const Admin = mongoose.model('Admin', AdminSchema)
+const User = mongoose.model('User', UserSchema)
+
+const Course = mongoose.model('Course', CourseSchema)
+
 module.exports = {
-    Admin: mongoose.model('Admin', AdminSchema),
-    User: mongoose.model('User', UserSchema),
-    Course: mongoose.model('Course', CourseSchema)
+    Admin,
+    User,
+    Course
 }
+
+// module.exports = {
+//     Admin: mongoose.model('Admin', AdminSchema),
+//     User: mongoose.model('User', UserSchema),
+//     Course: mongoose.model('Course', CourseSchema)
+// }

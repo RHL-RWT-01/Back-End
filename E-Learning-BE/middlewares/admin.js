@@ -1,4 +1,4 @@
-const {Admin} =require('../db');
+const {Admin} =require('../db/index');
 
 function adminMiddleware(req, res, next) {
     const username = req.headers.username;
