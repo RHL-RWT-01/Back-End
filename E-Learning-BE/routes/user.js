@@ -24,7 +24,7 @@ router.post('/signup',(req,res)=>{
     })
 })
 
-app.get('/courses',userMiddleware,async (req,res)=>{
+router.get('/courses',async (req,res)=>{
     courses = await Course.find({});
     res.json({
         courses: courses
