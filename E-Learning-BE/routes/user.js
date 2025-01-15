@@ -56,7 +56,7 @@ router.get("/courses", async (req, res) => {
 router.post("/courses/:courseId", userMiddleware, (req, res) => {
     const courseId = req.params.courseId;
     const username = req.headers.username;
-    
+    console.log(courseId);
     // Update user's purchasedCourses array
     User.updateOne(
       {
@@ -90,6 +90,7 @@ router.get("/purchasedCourses", userMiddleware, async (req, res) => {
   res.json({
     purchasedCourses: purchasedCourses,
   });
+  console.log(purchasedCourses);
 });
 
 module.exports = router;
