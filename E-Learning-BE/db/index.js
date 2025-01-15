@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
-mongoose.connect('url-db')
+require('dotenv').config();
+const url_db= process.env.DB_URL
+mongoose.connect(url_db)
 
 const AdminSchema = new mongoose.Schema({
     username:String,
