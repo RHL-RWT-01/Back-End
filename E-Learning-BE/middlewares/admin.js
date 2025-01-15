@@ -12,7 +12,7 @@ function adminMiddleware(req, res, next) {
         if(val){
             next();
         }else{
-            res.status(401).send('Unauthorized');
+            res.status(401).send('admin not found');
         }
       })
 }

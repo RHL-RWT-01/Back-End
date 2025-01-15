@@ -3,6 +3,16 @@ const adminMiddleware = require('../middlewares/admin');
 const {Admin,Course}= require('../db/index');
 const router =express.Router();
 
+reouter.post('/signin',adminMiddleware,(req,res)=>{
+    const username = req.body.username;
+    const password = req.body.password;
+
+    Admin.findOne({
+        username: username,
+        password: password
+    })
+})
+
 router.post('/signup',(req,res)=>{
     const username=req.body.username;
     const password=req.body.password;
