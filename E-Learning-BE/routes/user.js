@@ -1,8 +1,31 @@
+require('dotenv').config();
+
+const JWT_SECRET = process.env.JWT_SECRET;
 const express = require("express");
 const userMiddleware = require("../middlewares/user");
 const { User, Course } = require("../db/index");
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 
+
+router.post("/signin", (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+   
+    const isUserExist = User.findOne({username: username, password: password});
+
+    if(isUserExist){
+        const token = jwt.sign({username: username}, JWT_SECRET);
+        res.json({
+            message: 'User signed in successfully',
+            token: token
+        })
+    }else{
+        res.status(401).json({
+            message: 'Admin not found'
+        })
+    }
+})
 router.post("/signup", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;

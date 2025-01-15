@@ -1,13 +1,13 @@
 require('dotenv').config();
 const JWT_SECRET = process.env.JWT_SECRET;
-
+const jwt = require('jsonwebtoken');
 const {Admin} =require('../db/index');
 function adminMiddleware(req, res, next) {
-    const token = req.headers.authorization;
+    let token = req.headers.authorization;
     token = token.split(' ')[1];
     const decoded = jwt.verify(token, JWT_SECRET);
 
-    if(decoded.id){
+    if(decoded.username){
         next();
     }else{
         res.status(401).send('admin not found');
