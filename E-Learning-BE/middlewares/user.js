@@ -1,6 +1,6 @@
 const {User} =require('../db');
 
-function adminMiddleware(req, res, next) {
+function userMiddleware(req, res, next) {
     const username = req.headers.username;
     const password = req.headers.password;
 
@@ -17,4 +17,4 @@ function adminMiddleware(req, res, next) {
       })
 }
 
-module.exports = adminMiddleware;
+module.exports = userMiddleware;

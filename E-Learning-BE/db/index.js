@@ -32,8 +32,3 @@ module.exports = {
     Course
 }
 
-// module.exports = {
-//     Admin: mongoose.model('Admin', AdminSchema),
-//     User: mongoose.model('User', UserSchema),
-//     Course: mongoose.model('Course', CourseSchema)
-// }
