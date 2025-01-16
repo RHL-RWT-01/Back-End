@@ -1,6 +1,6 @@
 const express = require('express');
 const {todoSchema} = require('./types');
-
+const {Todo}=require('./db');
 const app = express();
 const port = 3000;
 
@@ -10,6 +10,10 @@ app.post('/todo',(req,res)=>{
     const todo = req.body;
     const result = todoSchema.parse(todo);
     if(result.success){
+        Todo.create({
+            title:todo.title,
+            description:todo.description,
+        })
         res.json({
             message: 'Todo created successfully',
         }); 
