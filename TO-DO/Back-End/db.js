@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 require('dotenv').config();
-const uri= process.env.DB_URL
-mongoose.connect(uri )
+const url_db= process.env.DB_URL
+mongoose.connect(url_db )
 
 const TodoSchema = new mongoose.Schema({
     title:String,

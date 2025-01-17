@@ -1,38 +1,56 @@
 const express = require('express');
-const {todoSchema} = require('./types');
-const {Todo}=require('./db');
+const { todoSchema } = require('./types');  // Assuming types.js exports Zod schema as todoSchema
+const { Todo } = require('./db');  // Assuming db.js exports a Todo model
 const app = express();
 const port = 3000;
 
 app.use(express.json());
 
-app.post('/todo',(req,res)=>{
-    const todo = req.body;
-    const result = todoSchema.parse(todo);
-    if(result.success){
-        Todo.create({
-            title:todo.title,
-            description:todo.description,
-        })
-        res.json({
-            message: 'Todo created successfully',
-        }); 
-    }else{
-        res.status(400).json({
-            message: 'Invalid data',
-        });
+// Route to create a new Todo
+app.post('/todo', async (req, res) => {
+  const todo = req.body;
+  const result = todoSchema.safeParse(todo);
+  if (result.success) {
+    try {
+      await Todo.create({
+        title: todo.title,
+        description: todo.description,
+      });
+      res.status(201).json({ message: 'Todo created successfully' });
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to create Todo', error: error.message });
     }
+  } else {
+    res.status(400).json({ message: 'Invalid data', errors: result.error.errors });
+  }
+});
 
-})
+// Route to fetch all Todos
+app.get('/todos', async (req, res) => {
+  try {
+    const todos = await Todo.find();  // Fetches all todos from the database
+    res.json(todos);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch todos', error: error.message });
+  }
+});
 
-app.get('/todos',(req,res)=>{
+// Route to mark a Todo as completed
+app.put('/completed', async (req, res) => {
+  const { id } = req.body;  // Assuming the request body contains an `id` to update
+  try {
+    const updatedTodo = await Todo.findByIdAndUpdate(id, { completed: true }, { new: true });
+    if (updatedTodo) {
+      res.json({ message: 'Todo marked as completed', todo: updatedTodo });
+    } else {
+      res.status(404).json({ message: 'Todo not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to update Todo', error: error.message });
+  }
+});
 
-})
-
-app.put('/completed',(req,res)=>{
-
-})
-
-app.listen((port) => {
-    console.log(`Server is running at http://localhost:${port}`)
-})
+// Starting the server
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
