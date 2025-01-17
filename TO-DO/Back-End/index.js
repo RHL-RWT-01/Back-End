@@ -30,10 +30,9 @@ app.post("/todo", async (req, res) => {
   }
 });
 
-// Route to fetch all Todos
 app.get("/todos", async (req, res) => {
   try {
-    const todos = await Todo.find(); // Fetches all todos from the database
+    const todos = await Todo.find();
     res.json(todos);
   } catch (error) {
     res
@@ -42,34 +41,27 @@ app.get("/todos", async (req, res) => {
   }
 });
 
-// Route to mark a Todo as completed
 app.put("/completed", async (req, res) => {
-  const { _id } = req.body; // Assuming the request body contains an `id` to update
-  const result = updateTodo.safeParse({ id: _id });
-  if (result.success) {
-    try {
-      const updatedTodo = await Todo.findByIdAndUpdate(
-        id,
-        { completed: true },
-      );
-      if (updatedTodo) {
-        res.json({ message: "Todo marked as completed", todo: updatedTodo });
-      } else {
-        res.status(404).json({ message: "Todo not found" });
+    const data = req.body;
+    const result = updateTodo.safeParse(data);
+    
+    if (result.success) {
+      try {
+        const updatedTodo = await Todo.findByIdAndUpdate(data.id, { completed: true }, { new: true });
+        if (updatedTodo) {
+          res.json({ message: "Todo marked as completed", todo: updatedTodo });
+        } else {
+          res.status(404).json({ message: "Todo not found" });
+        }
+      } catch (error) {
+        res.status(500).json({ message: "Failed to update Todo", error: error.message });
       }
-    } catch (error) {
-      res
-        .status(500)
-        .json({ message: "Failed to update Todo", error: error.message });
+    } else {
+      res.status(400).json({ message: "Invalid data", errors: result.error.errors });
     }
-  } else {
-    res
-      .status(400)
-      .json({ message: "Invalid data", errors: result.error.errors });
-  }
-});
+  });
+  
 
-// Starting the server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
