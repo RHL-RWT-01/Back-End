@@ -3,13 +3,29 @@ import React from 'react'
 function Create() {
   return (
     <>
-    <input type="text" placeholder="title" />
+    <input style={{
+        padding:15,
+        margin:12
+    }} type="text" placeholder="title" />
     <br/>
     <br/>
-    <input type="text" placeholder="description" />
+    <input style={{
+        padding:15,
+        margin:12
+    }}
+     type="text" placeholder="description" />
     <br/>
     <br/>
-    <button>Add Todo</button>
+    <button style={{
+        backgroundColor:'purple',
+        color:'white',
+        borderRadius:15,
+        border:0,
+        width:'10%',
+        cursor:'pointer',
+        padding:15,
+        margin:20
+    }} >Add Todo</button>
 
     </>
   )
