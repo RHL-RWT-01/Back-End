@@ -5,7 +5,11 @@ mongoose.connect(url_db )
 
 const TodoSchema = new mongoose.Schema({
     title:String,
-    description:String
+    description:String,
+    completed:{
+        type:Boolean,
+        default:false
+    }
 })
 
 const Todo = mongoose.model('Todo', TodoSchema)
