@@ -1,6 +1,9 @@
 import React from 'react'
 
 function Create() {
+  const [title, setTitle] =useState('');
+  const [description, setDescription] =useState('');
+
   return (
     <>
     <input style={{
