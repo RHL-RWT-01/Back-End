@@ -1,9 +1,10 @@
 const express = require("express");
-const { todoSchema, updateTodo } = require("./types"); // Assuming types.js exports Zod schema as todoSchema
+const { todoSchema, updateTodo } = require("./types"); 
+const cors = require("cors");
 const { Todo } = require("./db"); // Assuming db.js exports a Todo model
 const app = express();
 const port = 3000;
-
+app.use(cors());
 app.use(express.json());
 
 // Route to create a new Todo
