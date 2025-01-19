@@ -15,8 +15,8 @@ function Hooks() {
     <>
       <div>Todos</div>
       <div>id:{id}</div>
-      <div>title:{data?.title}</div>
-      <div>completed:{data?.completed}</div>
+      <div>title:{data.title}</div>
+      <div>completed:{data.completed}</div>
       <div>userId:{data?.userId}</div>
       <button onClick={() => setId(id + 1)}>Increment</button>
     </>
