@@ -48,7 +48,7 @@ const Tasks = () => {
             return (
               <div key={image.id} ref={lastElementRef} className="image-card">
                 <img src={image.download_url} alt={image.author} 
-                style={{width: "100px", height: "100px"}}
+                style={{width: "500px", height: "400px"}}
                 />
                 <p>By {image.author}</p>
               </div>
@@ -56,8 +56,9 @@ const Tasks = () => {
           } else {
             return (
               <div key={image.id} className="image-card">
+                <h2>{image.id}</h2>
                 <img src={image.download_url} alt={image.author}
-                style={{width: "100px", height: "100px"}}
+                style={{width: "500px", height: "400px"}}
                 />
                 <p>By {image.author}</p>
               </div>
