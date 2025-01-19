@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Header from './components/Header'
 import Hooks from './components/Hooks'
+import Tasks from './components/Tasks'
 function App() {
   
 
@@ -9,7 +10,8 @@ function App() {
     <h2>Hi</h2>
       {/* <Header/>
       <Header title="Rahul"/> */}
-      <Hooks/>
+      {/* <Hooks/> */}
+      <Tasks/>
     </>
   )
 }
