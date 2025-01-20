@@ -1,8 +1,11 @@
 import React from 'react'
-
+import Nav from './Nav'
 function Home() {
   return (
     <>
+
+     <h1>Welcome to My Website</h1>
+     <Nav/>
      <div style={{textAlign: 'center'
         , marginTop: '100px'
         , marginBottom: '100px'
