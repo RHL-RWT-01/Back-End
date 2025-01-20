@@ -1,11 +1,11 @@
 import React from 'react'
-import Nav from './Nav'
+import Navigate from './Navigate'
 function Home() {
   return (
     <>
 
      <h1>Welcome to My Website</h1>
-     <Nav/>
+     <Navigate/>
      <div style={{textAlign: 'center'
         , marginTop: '100px'
         , marginBottom: '100px'
