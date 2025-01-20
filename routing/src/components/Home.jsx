@@ -15,6 +15,14 @@ function Home() {
      }}>
         <h1>Home</h1>
         <p>Welcome to the Home Page</p>
+        <p style={{color:'black'
+            , fontSize: '16px'
+            , marginTop: '10px'
+            ,backgroundColor:'white'
+        }}>Here you can find information about the website</p>
+        <img src="https://t4.ftcdn.net/jpg/05/23/88/59/240_F_523885906_HOwhqK2pavrRM8G0ffqnb4UbJirnkhdj.jpg"
+        style={{width: '100%', height: 'auto', marginTop: '20px'}} alt="Home"
+        ></img>
         
      </div>
     </>
