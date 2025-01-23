@@ -1,18 +1,16 @@
-const zod=require('zod');
+const zod = require("zod");
 
-const todoSchema=zod.object({
-    title:zod.string(),
-    description:zod.string(),
-    completed:zod.boolean().optional(false),
-})
+const todoSchema = zod.object({
+  title: zod.string(),
+  description: zod.string(),
+  completed: zod.boolean().optional(false),
+});
 
-const updateTodo=zod.object({
-    id:zod.string(),
+const updateTodo = zod.object({
+  id: zod.string(),
+});
 
-})
-
-
-module.exports={
-    todoSchema,
-    updateTodo,
-}   
+module.exports = {
+  todoSchema,
+  updateTodo,
+};
